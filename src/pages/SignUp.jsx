@@ -5,6 +5,8 @@ import visibilityIcon from '../assets/svg/visibilityIcon.svg'
 import {getAuth, createUserWithEmailAndPassword, updateProfile} from 'firebase/auth'
 import {db} from '../firebase.config'
 import { setDoc, doc, serverTimestamp } from 'firebase/firestore'
+import { toast } from 'react-toastify'
+import OAuth from '../components/OAuth'
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [formData, seFormData] = useState({
@@ -37,7 +39,7 @@ const SignUp = () => {
       await setDoc(doc(db, 'users', user.uid), formDataCopy)
       navigate('/')
     }catch (error){
-      console.log(error)
+      toast.error('Algo estuvo mal al registrar')
     }
   }
   return (
@@ -70,7 +72,7 @@ const SignUp = () => {
           </button>
         </div>
         </form>
-        {/**Google Auth */}
+        <OAuth/>
         <Link to='/sign-in' className='registerLink'>
           Iniciar sesión
         </Link>
